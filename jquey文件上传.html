@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+    <script src="./lib/jquery.js"></script>
+</head>
+
+<body>
+    <input type="file" id="picFile" style="margin: 0px;">
+    <button id="submit">提交</button>
+    <img src="" alt="" id="picture" style="width: 800px;">
+    <script>
+        $(function() {
+
+            $('#submit').on('click', function() {
+                if ($('#picFile')[0].files.length <= 0) return alert('请选择文件');
+                var fd = new FormData();
+                fd.append('pic_file', $('#picFile')[0].files[0])
+                $.ajax({
+                    method: 'post',
+                    url: 'http://www.liulongbin.top:3006/api/upload/avatar',
+                    data: fd,
+                    // 不修改 Content-Type 属性，使用 FormData 默认的 Content-Type 值
+                    contentType:  false,
+                    // 不对 FormData 中的数据进行 url 编码，而是将 FormData 数据原样发送到服务器
+                    processData:  false,
+                    success: function(result) {
+                        console.log(result);
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
